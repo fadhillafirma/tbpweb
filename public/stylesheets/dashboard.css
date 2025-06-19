@@ -1,0 +1,151 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+}
+
+header {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .header-left {
+  display: flex;
+  align-items: center;
+}
+
+header .logo {
+  width: 40px; /* Ukuran logo lebih besar */
+  height: 40px;
+  margin-right: 10px;
+}
+
+header .header-left h1 {
+  margin: 0;
+}
+
+header .header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Menjaga profil di kanan */
+}
+
+header .header-right a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+header .header-right a:hover {
+  text-decoration: underline;
+}
+
+/* Memindahkan foto profil ke sebelah kanan dan memperbesar sedikit */
+header .profile-button img {
+  width: 60px; /* Ukuran gambar profil diperbesar */
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  margin-left: 20px; /* Memberikan jarak antara profil dan About Us */
+}
+
+header .profile-button img:hover {
+  transform: scale(1.1);
+}
+
+/* Main container for Dashboard */
+.dashboard-container {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-event {
+  margin: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.no-event form {
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.event-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.event-item {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-item:hover {
+  transform: translateY(-5px);
+}
+
+.event-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.event-item h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.event-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+.edit-btn {
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.edit-btn:disabled {
+  background-color: #d6d6d6;
+  cursor: not-allowed;
+}
+
+.edit-btn:hover {
+  background-color: #218838;
+}
