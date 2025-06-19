@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman Komentar</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* General Styling */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #374151;
+            font-size: 16px;
+            min-height: 100vh;
+        }
+
+        /* Header Styling */
+        .header {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border-bottom: 2px solid #1137b9;
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .logo a {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo a:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(17, 55, 185, 0.2);
+        }
+
+        /* Back Button Styling */
+        .back-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #1137b9;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background-color: #0e2a94;
+            transform: translateY(-50%) translateX(-2px);
+            box-shadow: 0 8px 25px rgba(17, 55, 185, 0.3);
+        }
+
+        .back-button::before {
+            content: "←";
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #1137b9;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1137b9;
+        }
+
+        .comment-form {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .name-box, .comment-box {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            background-color: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            color: #374151;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .name-box:focus, .comment-box:focus {
+            outline: none;
+            border-color: #1137b9;
+            box-shadow: 0 0 0 3px rgba(17, 55, 185, 0.1);
+            background-color: #ffffff;
+        }
+
+        .name-box::placeholder, .comment-box::placeholder {
+            color: #9ca3af;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #1137b9;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0e2a94;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(17, 55, 185, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comment {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #1137b9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: #1137b9;
+        }
+
+        .comment p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .comment .author {
+            font-weight: 600;
+            font-size: 18px;
+            color: #1137b9;
+            margin-bottom: 4px;
+        }
+
+        .comment .date {
+            font-size: 13px;
+            color: #6b7280;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .comment .comment-text {
+            color: #374151;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .comment .edit-btn, .comment .delete-btn {
+            font-size: 14px;
+            padding: 8px 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            margin-right: 8px;
+            margin-top: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comment .edit-btn {
+            background-color: #1137b9;
+            color: white;
+        }
+
+        .comment .edit-btn:hover {
+            background-color: #0e2a94;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(17, 55, 185, 0.3);
+        }
+
+        .comment .delete-btn {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .comment .delete-btn:hover {
+            background-color: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #1137b9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #0e2a94;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 15px;
+            }
+
+            .back-button {
+                left: 15px;
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .back-button::before {
+                font-size: 14px;
+            }
+
+            .logo img {
+                width: 60px !important;
+                height: 60px !important;
+            }
+
+            .container {
+                width: 95%;
+                padding: 20px;
+                margin: 10px auto;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .comment-form {
+                padding: 20px;
+            }
+
+            .name-box, .comment-box, .submit-btn {
+                font-size: 14px;
+                padding: 14px 16px;
+            }
+
+            .comment {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .comment .edit-btn, .comment .delete-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+                margin-right: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 10px;
+            }
+
+            .back-button {
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .logo img {
+                width: 50px !important;
+                height: 50px !important;
+            }
+
+            .container {
+                width: 100%;
+                padding: 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .comment-form {
+                padding: 16px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Back Button -->
+    <header class="header">
+        <button class="back-button" onclick="goBack()" >
+            <a href="homepage.ejs"></a>
+        </button>
+        <div class="logo">
+            <a href= "homepage.ejs">
+                <img src="images/logo uvent.png" width="80" height="80" alt="Logo Uvent">
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <h1>Halaman Komentar</h1>
+
+            <!-- Form untuk mengirim komentar -->
+            <div class="comment-form">
+                <input id="userName" class="name-box" type="text" placeholder="Masukkan nama (Opsional)">
+                <textarea id="commentText" class="comment-box" rows="4" placeholder="Tulis komentar..."></textarea>
+                <button class="submit-btn" onclick="submitComment()">Kirim Komentar</button>
+            </div>
+
+            <!-- Menampilkan komentar -->
+            <div class="comments-section" id="commentsSection"></div>
+        </div>
+    </div>
+
+    <script>
+        let editingComment = null;
+
+        // Function to go back
+        function goBack() {
+            window.history.back();
+        }
+
+        // Function to submit a comment
+        function submitComment() {
+            const commentText = document.getElementById("commentText").value;
+            const userName = document.getElementById("userName").value.trim();
+
+            // Jika nama kosong, set default 'Pengguna'
+            const authorName = userName === "" ? "Pengguna" : userName;
+
+            // Check if the comment is not empty
+            if (commentText.trim() !== "") {
+                // Get the current date and time
+                const date = new Date();
+                const dateString = date.toLocaleString();
+
+                if (editingComment) {
+                    // Edit an existing comment
+                    editingComment.querySelector('.comment-text').innerText = commentText;
+                    editingComment.querySelector('.date').innerText = `Edited on ${dateString}`;
+                    editingComment.querySelector('.author').innerText = authorName; // Update the author
+                    editingComment = null;  // Reset the editing comment after saving
+                } else {
+                    // Create a new comment element
+                    const commentElement = document.createElement("div");
+                    commentElement.classList.add("comment");
+
+                    // Add content to the comment element
+                    commentElement.innerHTML = `
+                        <p class="author">${authorName}</p>
+                        <p class="date">${dateString}</p>
+                        <p class="comment-text">${commentText}</p>
+                        <button class="edit-btn" onclick="editComment(this)">Edit</button>
+                        <button class="delete-btn" onclick="deleteComment(this)">Hapus</button>
+                    `;
+
+                    // Append the new comment to the comments section
+                    document.getElementById("commentsSection").appendChild(commentElement);
+                }
+
+                // Clear the textarea and name input after submission
+                document.getElementById("commentText").value = "";
+                document.getElementById("userName").value = "";
+
+                // Optional: Simulate sending the comment to the server
+                fetch('/submit-comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ comment_text: commentText, user_name: authorName, user_id: 1 }) // Ganti dengan user_id yang sesuai
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert("Komentar tidak boleh kosong!");
+            }
+        }
+
+        // Function to edit a comment
+        function editComment(button) {
+            const commentElement = button.closest('.comment');
+            const commentText = commentElement.querySelector('.comment-text').innerText;
+            const authorName = commentElement.querySelector('.author').innerText;
+
+            // Set the textarea to the comment's text
+            document.getElementById("commentText").value = commentText;
+            document.getElementById("userName").value = authorName; // Set the author's name in the input field
+
+            // Set the comment element as the one being edited
+            editingComment = commentElement;
+        }
+
+        // Function to delete a comment
+        function deleteComment(button) {
+            const commentElement = button.closest('.comment');
+            commentElement.remove();
+        }
+    </script>
+
+</body>
+</html>

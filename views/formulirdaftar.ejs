@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Pendaftaran</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- jsPDF library -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> <!-- Tailwind CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for back arrow -->
+</head>
+<body class="bg-gray-100 py-10">
+
+  <!-- Back Button -->
+  <button class="absolute top-5 left-5 bg-indigo-700 text-white py-2 px-4 rounded-lg hover:bg-indigo-800 flex items-center" onclick="window.history.back();">
+    <i class="fas fa-arrow-left mr-2"></i>
+
+  </button>
+
+  <!-- Main Container -->
+  <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    
+    <!-- Registration Form -->
+    <form id="registrationForm">
+      <h1 class="text-2xl font-bold text-indigo-700 text-center mb-6">Formulir Pendaftaran</h1>
+
+      <!-- Full Name -->
+      <label for="fullName" class="block text-sm text-indigo-700">Nama Lengkap</label>
+      <input type="text" id="fullName" name="fullName" class="w-full p-3 mt-2 border border-gray-300 rounded-md" required>
+
+      <!-- Identity Type -->
+      <label for="identityType" class="block text-sm text-indigo-700 mt-4">Pilih Jenis Identitas</label>
+      <select id="identityType" name="identityType" class="w-full p-3 mt-2 border border-gray-300 rounded-md" required>
+        <option value="ktp">KTP</option>
+        <option value="paspor">Paspor</option>
+      </select>
+
+      <!-- Identity Number -->
+      <label for="identityNumber" class="block text-sm text-indigo-700 mt-4">Nomor Identitas</label>
+      <input type="text" id="identityNumber" name="identityNumber" class="w-full p-3 mt-2 border border-gray-300 rounded-md" placeholder="Masukkan Nomor KTP/Paspor" required>
+
+      <!-- Email -->
+      <label for="email" class="block text-sm text-indigo-700 mt-4">Email</label>
+      <input type="email" id="email" name="email" class="w-full p-3 mt-2 border border-gray-300 rounded-md" required>
+
+      <!-- WhatsApp -->
+      <label for="whatsapp" class="block text-sm text-indigo-700 mt-4">Nomor WhatsApp</label>
+      <input type="tel" id="whatsapp" name="whatsapp" class="w-full p-3 mt-2 border border-gray-300 rounded-md" placeholder="+62" required>
+
+      <!-- Submit Button -->
+      <button type="submit" class="w-full mt-6 py-3 bg-indigo-700 text-white text-lg font-bold rounded-md hover:bg-indigo-800 focus:outline-none">
+        Daftar
+      </button>
+    </form>
+
+    <!-- Registration Receipt -->
+    <div id="registrationReceipt" class="hidden bg-indigo-700 text-white p-6 rounded-lg mt-6">
+      <h2 class="text-xl font-semibold text-center mb-4">PENDAFTARAN BERHASIL</h2>
+      <p class="text-center mb-4">Bukti Pendaftaran Anda</p>
+
+      <div class="mb-4">
+        <p><strong>Nama Lengkap:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Jenis Identitas:</strong> <span id="identityTypeDisplay"></span></p>
+        <p><strong>Nomor Identitas:</strong> <span id="identityNumberDisplay"></span></p>
+        <p><strong>Email:</strong> <span id="emailDisplay"></span></p>
+        <p><strong>Nomor WhatsApp:</strong> <span id="whatsappDisplay"></span></p>
+      </div>
+
+      <div class="text-center">
+        <p>Status Pendaftaran: Berhasil</p>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <!-- Download PDF Button -->
+        <button class="w-48 py-3 bg-indigo-800 text-white rounded-md hover:bg-indigo-900" onclick="generatePDF()">Unduh PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Show receipt after submitting the form
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get the data from the form
+      const fullName = document.getElementById('fullName').value;
+      const identityType = document.getElementById('identityType').value;
+      const identityNumber = document.getElementById('identityNumber').value;
+      const email = document.getElementById('email').value;
+      const whatsapp = document.getElementById('whatsapp').value;
+
+      // Display the registration receipt
+      document.getElementById('registrationReceipt').classList.remove('hidden');
+      document.getElementById('nameDisplay').innerText = fullName;
+      document.getElementById('identityTypeDisplay').innerText = identityType;
+      document.getElementById('identityNumberDisplay').innerText = identityNumber;
+      document.getElementById('emailDisplay').innerText = email;
+      document.getElementById('whatsappDisplay').innerText = whatsapp;
+
+      // Hide the registration form
+      document.getElementById('registrationForm').classList.add('hidden');
+    });
+
+    // Function to generate the PDF
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Get the data from the receipt
+      const name = document.getElementById('nameDisplay').innerText;
+      const identityType = document.getElementById('identityTypeDisplay').innerText;
+      const identityNumber = document.getElementById('identityNumberDisplay').innerText;
+      const email = document.getElementById('emailDisplay').innerText;
+      const whatsapp = document.getElementById('whatsappDisplay').innerText;
+
+      // Add content to the PDF
+      doc.setFontSize(20);
+      doc.text('Pendaftaran Berhasil', 10, 10);
+      doc.setFontSize(12);
+      doc.text(`Nama Lengkap: ${name}`, 10, 20);
+      doc.text(`Jenis Identitas: ${identityType}`, 10, 30);
+      doc.text(`Nomor Identitas: ${identityNumber}`, 10, 40);
+      doc.text(`Email: ${email}`, 10, 50);
+      doc.text(`Nomor WhatsApp: ${whatsapp}`, 10, 60);
+      doc.text('Status Pendaftaran: Berhasil', 10, 70);
+
+      // Save the PDF
+      doc.save('bukti-pendaftaran.pdf');
+    }
+  </script>
+
+</body>
+</html>
