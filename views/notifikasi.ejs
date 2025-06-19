@@ -161,41 +161,11 @@
 
         // Simulasi data untuk testing
         const sampleUsers = [
-            { 
-                nama: 'Ahmad Rizki Pratama', 
-                jenisIdentitas: 'KTP',
-                nomorIdentitas: '3201234567890123',
-                email: 'ahmad.rizki@email.com', 
-                whatsapp: '081234567890' 
-            },
-            { 
-                nama: 'Siti Nurhaliza Dewi', 
-                jenisIdentitas: 'SIM',
-                nomorIdentitas: '3202345678901234',
-                email: 'siti.nur@email.com', 
-                whatsapp: '082345678901' 
-            },
-            { 
-                nama: 'Budi Santoso Wijaya', 
-                jenisIdentitas: 'KTP',
-                nomorIdentitas: '3203456789012345',
-                email: 'budi.santoso@email.com', 
-                whatsapp: '083456789012' 
-            },
-            { 
-                nama: 'Dewi Lestari Sari', 
-                jenisIdentitas: 'Passport',
-                nomorIdentitas: 'A1234567',
-                email: 'dewi.lestari@email.com', 
-                whatsapp: '084567890123' 
-            },
-            { 
-                nama: 'Eko Prasetyo Utomo', 
-                jenisIdentitas: 'KTP',
-                nomorIdentitas: '3205678901234567',
-                email: 'eko.prasetyo@email.com', 
-                whatsapp: '085678901234' 
-            }
+            { nama: 'Ahmad Rizki', email: 'ahmad.rizki@email.com', telepon: '081234567890' },
+            { nama: 'Siti Nurhaliza', email: 'siti.nur@email.com', telepon: '082345678901' },
+            { nama: 'Budi Santoso', email: 'budi.santoso@email.com', telepon: '083456789012' },
+            { nama: 'Dewi Lestari', email: 'dewi.lestari@email.com', telepon: '084567890123' },
+            { nama: 'Eko Prasetyo', email: 'eko.prasetyo@email.com', telepon: '085678901234' }
         ];
 
         function formatTime(date) {
@@ -231,7 +201,7 @@
             
             // Play notification sound (jika browser mendukung)
             try {
-                const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSsFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt55xEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQE=');
+                const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSsFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQELYLN8diJOAcZaLrt55xEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+nErmcpBCl+zPLZeyQE=');
                 audio.volume = 0.3;
                 audio.play().catch(() => {});
             } catch (e) {}
@@ -269,16 +239,28 @@
                         </div>
                     </div>
                     <div class="text-gray-600 mb-6 text-lg">
-                        <p class="text-green-600 font-semibold text-xl">✅ Berhasil mendaftar!</p>
+                        <p><strong class="text-gray-800 text-xl">${notification.userData.nama}</strong> telah mendaftar pada <span class="font-semibold text-navy">${formatDate(notification.timestamp)}</span></p>
                     </div>
                     <div class="bg-gray-50 rounded-xl p-6 space-y-4">
-                        <p><strong>Nama Lengkap:</strong> <span class="text-navy font-medium">${notification.userData.nama}</span></p>
-                        <p><strong>Jenis Identitas:</strong> <span class="text-navy font-medium">${notification.userData.jenisIdentitas}</span></p>
-                        <p><strong>Nomor Identitas:</strong> <span class="text-navy font-medium">${notification.userData.nomorIdentitas}</span></p>
-                        <p><strong>Email:</strong> <span class="text-navy font-medium">${notification.userData.email}</span></p>
-                        <p><strong>Nomor WhatsApp:</strong> <span class="text-navy font-medium">${notification.userData.whatsapp}</span></p>
-                        <div class="mt-4 pt-4 border-t border-gray-200">
-                            <p class="text-sm text-gray-500"><strong>Waktu Pendaftaran:</strong> ${formatDate(notification.timestamp)} - ${formatTime(notification.timestamp)}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-gray-700 text-sm uppercase tracking-wide mb-1">Nama Lengkap</span>
+                                <span class="text-gray-800 text-lg font-medium">${notification.userData.nama}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-gray-700 text-sm uppercase tracking-wide mb-1">Email</span>
+                                <span class="text-gray-800 text-lg font-medium">${notification.userData.email}</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-gray-700 text-sm uppercase tracking-wide mb-1">Telepon</span>
+                                <span class="text-gray-800 text-lg font-medium">${notification.userData.telepon}</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-gray-700 text-sm uppercase tracking-wide mb-1">Waktu Pendaftaran</span>
+                                <span class="text-gray-800 text-lg font-medium">${formatDate(notification.timestamp)} - ${formatTime(notification.timestamp)}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -21,12 +21,78 @@
         .dropdown-content.show {
             display: block;
         }
+
+        /* Banner Slider Styles */
+        .banner-slider {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .banner-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+        }
     </style>
 </head>
 <body class="font-roboto bg-gray-100">
 
 <header class="flex justify-between items-center p-4 bg-white fixed w-full top-0 z-10">
-    <a href="homepage" class="logo-container">
+    <a href="homepage.ejs" class="logo-container">
         <img src="images/logo uvent.png" alt="Logo Uvent" width="50" height="50">
     </a>
     <nav>
@@ -35,12 +101,61 @@
             <li><a href="events.html" class="text-black hover:underline">Event</a></li>
             <li><a href="about.html" class="text-black hover:underline">About us</a></li>
             <li><a href="#" class="text-black hover:underline">Contact</a></li>
+            <li><a href="komentar.ejs" class="text-black hover:underline">Comment</a></li>
             <li><a href="#" class="text-white bg-blue-600 px-6 py-3 rounded-xl hover:bg-blue-800 transition duration-300">Sign in As Organizer</a></li>
         </ul>
     </nav>
 </header>
 
-<main class="mt-24 px-5">
+<!-- Banner Slider Section -->
+<section class="banner-slider mt-20">
+    <!-- Slide 1 - Ganti 'images/banner1.jpg' dengan path gambar Anda -->
+    <div class="banner-slide active" style="background-image: url('images/banner1.png'); background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/banner1.jpg');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <h1 class="text-5xl font-bold mb-4">#SOLUSITIKET</h1>
+                <h2 class="text-4xl font-bold mb-6">EVENTMU</h2>
+                <p class="text-xl mb-8">Temukan event terbaik di Unand</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2 - Ganti 'images/banner2.jpg' dengan path gambar Anda -->
+    <div class="banner-slide" style="background-image: url('images/banner2.jpg'); background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/banner2.jpg');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <h1 class="text-5xl font-bold mb-4">BERAGAM</h1>
+                <h2 class="text-4xl font-bold mb-6">Event Seru</h2>
+                <p class="text-xl mb-8">Bergabunglah dalam EVent yang ada di Unand</p>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3 - Ganti 'images/banner3.jpg' dengan path gambar Anda -->
+    <div class="banner-slide" style="background-image: url('images/banner3.jpg'); background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/banner3.jpg');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <h1 class="text-5xl font-bold mb-4">KONSER</h1>
+                <h2 class="text-4xl font-bold mb-6">SPEKTAKULER</h2>
+                <p class="text-xl mb-8">Nikmati pertunjukan musik dari artis ternama</p>
+                <button class="bg-blue-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300">
+                    Beli Tiket
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner Indicators -->
+    <div class="banner-indicators">
+        <div class="indicator active" data-slide="0"></div>
+        <div class="indicator" data-slide="1"></div>
+        <div class="indicator" data-slide="2"></div>
+    </div>
+</section>
+
+<main class="mt-8 px-5">
     <!-- Sorting Dropdown -->
     <div class="mb-5 relative">
         <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl hover:from-blue-400 hover:to-blue-500 transition duration-300" id="dropdownButton">
@@ -78,13 +193,80 @@
             <p><i class="ri-calendar-line"></i> 19 Mei 2023</p>
             <p><i class="ri-map-pin-line"></i> Auditorium Universitas Andalas</p>
             <p class="text-orange-500 font-semibold">FREE</p>
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-800 transition duration-300">See Details</button>
         </article>
     </section>  
 </main>
 
-<!-- Link to external JS file -->
-<script src="script.js"></script>
+<script>
+// Banner Auto Slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.banner-slide');
+const indicators = document.querySelectorAll('.indicator');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    indicators.forEach(indicator => indicator.classList.remove('active'));
+    
+    // Show current slide
+    slides[index].classList.add('active');
+    indicators[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+}
+
+// Auto slide every 5 seconds
+setInterval(nextSlide, 5000);
+
+// Manual indicator click
+indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+    });
+});
+
+// Original dropdown functionality
+document.getElementById('dropdownButton').addEventListener('click', function() {
+    const dropdownContent = document.getElementById('dropdownContent');
+    dropdownContent.classList.toggle('show');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('dropdownContent');
+    const button = document.getElementById('dropdownButton');
+    
+    if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.classList.remove('show');
+    }
+});
+
+// Sorting functionality (if needed)
+document.getElementById('sortNameAZ').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Add sorting logic here
+});
+
+document.getElementById('sortNameZA').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Add sorting logic here
+});
+
+document.getElementById('sortPriceLowHigh').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Add sorting logic here
+});
+
+document.getElementById('sortPriceHighLow').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Add sorting logic here
+});
+</script>
 
 </body>
 </html>

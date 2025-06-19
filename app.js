@@ -3,11 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
+const flash = require('connect-flash');  // Import connect-flash
 
-// Import routing
+const db = require('./db'); // Menggunakan koneksi database tunggal
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var connection = require('../db');  // Mengimpor koneksi database
+var profilRoutes = require('./routes/profilRoutes'); // Rute untuk profil
 
 var app = express();
 
@@ -15,35 +17,77 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Setup express-session terlebih dahulu sebelum connect-flash
+app.use(session({
+  secret: 'your-secret-key',  // Kunci rahasia sesi (gunakan yang lebih kuat)
+  resave: false,  // Jangan simpan sesi jika tidak ada perubahan
+  saveUninitialized: true,  // Simpan sesi meskipun belum ada data
+  cookie: { secure: false }  // Jika menggunakan HTTPS, set true
+}));
+
+app.use(flash());  // Menggunakan connect-flash
+
+// Middleware untuk menyimpan pesan flash ke res.locals
+app.use((req, res, next) => {
+  res.locals.messages = req.flash();  // Menyimpan pesan flash di res.locals.messages
+  next();
+});
+
+// Middleware untuk memeriksa sesi user (userId) dan mendapatkan data user
+app.use((req, res, next) => {
+  if (req.session.userId) {
+    db.query('SELECT * FROM users WHERE id = ?', [req.session.userId], (err, results) => {
+      if (err) {
+        return next(err);
+      }
+
+      const user = results[0]; // Ambil data pengguna pertama
+
+      // Mengecek apakah ada data yang belum lengkap (missingData)
+      const missingData = !user.first_name || !user.last_name || !user.email || !user.phone || !user.country || !user.city;
+
+      // Menambahkan missingData ke res.locals
+      res.locals.missingData = missingData;  // Menambahkan missingData ke res.locals
+      res.locals.user = user;  // Menambahkan user ke res.locals
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
 // Middleware setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// Set folder untuk file statis seperti gambar, CSS, dll.
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routing untuk halaman index dan users
+// Set folder untuk file statis seperti gambar, CSS, dll.
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Routing untuk halaman utama dan users
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profil', profilRoutes);
+
+// Routing untuk halaman homepage
+app.get('/', (req, res) => {
+  res.render('homepage');  // Pastikan 'homepage' adalah nama file EJS yang kamu buat
+});
 
 // Routing untuk halaman events
 app.get('/events', function(req, res, next) {
-  // Merender file event.ejs yang ada di dalam folder views
-  res.render('event');  
+  res.render('event');
 });
 
 // Routing untuk halaman komentar
 app.get('/comments', (req, res) => {
-  // Mengambil komentar dari database
-  connection.query('SELECT * FROM comments ORDER BY comment_datetime DESC', (err, results) => {
+  db.query('SELECT * FROM comments ORDER BY comment_datetime DESC', (err, results) => {
     if (err) {
       console.error('Error fetching comments: ', err);
       return res.status(500).send('Error fetching comments');
     }
-
-    // Render halaman komentar dengan data dari database
     res.render('index', { comments: results });
   });
 });
@@ -52,11 +96,9 @@ app.get('/comments', (req, res) => {
 app.post('/submit-comment', (req, res) => {
   const { comment_text, user_id } = req.body;
 
-  // Pastikan komentar tidak kosong
   if (comment_text && comment_text.trim() !== "") {
     const query = 'INSERT INTO comments (user_id, comment_text) VALUES (?, ?)';
-
-    connection.query(query, [user_id, comment_text], (err, result) => {
+    db.query(query, [user_id, comment_text], (err, result) => {
       if (err) {
         console.error('Error inserting comment: ', err);
         return res.status(500).send('Error saving comment');
@@ -68,18 +110,25 @@ app.post('/submit-comment', (req, res) => {
   }
 });
 
-// catch 404 and forward to error handler
+// Dashboard Route (Setelah login berhasil)
+app.get('/dashboard', (req, res) => {
+  if (!req.session.userId) {
+    return res.redirect('/login');  // Jika tidak ada sesi, arahkan kembali ke login
+  }
+
+  res.render('dashboard');  // Gantilah dengan tampilan dashboard yang sesuai
+});
+
+// Handle 404 errors
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
@@ -87,7 +136,7 @@ app.use(function(err, req, res, next) {
 // Menentukan port
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(Server is running on port ${PORT});
 });
 
-module.exports = app;
+module.exports = app;
