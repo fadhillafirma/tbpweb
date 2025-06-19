@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile</title>
+  <link rel="stylesheet" href="stylesheets/profil.css" />
+</head>
+<body>
+  <div id="main-wrapper"></div>
+  <header>
+    <div class="header-left">
+      <img src="images/Logo.png" alt="Logo" />
+      <h1>Profile</h1>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search..">
+      <button><img src="images/Search.png" alt="Search" /></button>
+    </div>
+  </header>
+
+  <div class="profile-container">
+    <aside class="sidebar">
+      <ul>
+        <li><strong><a href="/dashboard" style="color:white; text-decoration:none;">Dashboard</a></strong></li>
+        <li><strong>Order</strong></li>
+        <li><strong><a href="/contact" style="color:white; text-decoration:none;">Report</a></strong></li>
+        <li><strong>Riders Management</strong></li>
+        <li><strong><a href="/contact" style="color:white; text-decoration:none;">Contact</a></strong></li>
+        <li><strong><a href="/tentang" style="color:white; text-decoration:none;">About</a></strong></li>
+        <li><strong>Logout</strong></li>
+      </ul>
+    </aside>
+
+    <main class="profile-content">
+      <div class="section-title">
+        <h2>My Profile</h2>
+        <div class="line"></div>
+      </div>
+
+      <% if (missingData) { %>
+        <div class="alert alert-warning">
+          <p>Beberapa data profil Anda belum lengkap. Silakan lengkapi informasi profil Anda.</p>
+        </div>
+      <% } %>
+
+      <div class="profile-header">
+        <div class="avatar" id="avatar"style="background-image: url('<%= user && user.avatar_url ? user.avatar_url : '/images/Userdefault.png' %>')">
+        </div>
+        <h3 id="display-name"><%= user.first_name %> <%= user.last_name %></h3>
+        <p id="display-role"><%= user.role %></p>
+        <p id="display-university">Universitas Andalas, Padang</p>
+        <button onclick="openModal()" class="edit-avatar-btn">Edit Profile</button>
+      </div>
+
+      <div class="profile-section">
+        <h4>Personal Information</h4>
+        <div class="info-grid">
+          <p><strong>First Name</strong> <span id="first_name"><%= user.first_name %></span></p>
+          <p><strong>Last Name</strong> <span id="last_name"><%= user.last_name %></span></p>
+          <p><strong>Date of Birth</strong> <span id="dob"><%= user.dob %></span></p>
+          <p><strong>Email Address</strong> <span id="email"><%= user.email %></span></p>
+          <p><strong>Phone Number</strong> <span id="phone"><%= user.phone %></span></p>
+          <p><strong>User Role</strong> <span id="role"><%= user.role %></span></p>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h4>Address</h4>
+        <div class="info-grid">
+          <p><strong>Country</strong> <span id="country"><%= user.country %></span></p>
+          <p><strong>City</strong> <span id="city"><%= user.city %></span></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Edit -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3>Edit Profile</h3>
+
+      <form action="/profil/edit" method="POST" enctype="multipart/form-data">
+        <label>Upload Photo:</label>
+        <input type="file" name="avatar" accept="image/*" id="avatar-upload">
+        
+        <input type="text" name="firstName" value="<%= user.first_name %>" placeholder="First Name">
+        <input type="text" name="lastName" value="<%= user.last_name %>" placeholder="Last Name">
+        <input type="text" name="email" value="<%= user.email %>" placeholder="Email Address">
+        <input type="text" name="phone" value="<%= user.phone %>" placeholder="Phone Number">
+        <input type="text" name="dob" value="<%= user.dob %>" placeholder="Date of Birth">
+        <input type="text" name="role" value="organizer" disabled placeholder="User Role"> <!-- Disable role input -->
+        <input type="text" name="country" value="<%= user.country %>" placeholder="Country">
+        <input type="text" name="city" value="<%= user.city %>" placeholder="City">
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+
+<script>
+  // Open modal for editing
+  function openModal() {
+    document.getElementById('modal').classList.add('active');
+    document.getElementById('main-wrapper').classList.add('blurred');
+  }
+  
+</script>
+
+</body>
+</html>
