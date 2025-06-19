@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Tiket</title>
+  <link rel="stylesheet" href="/stylesheets/ticket.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <img src="/images/logo.png" alt="Logo" class="logo" />
+      <h1>Detail Tiket</h1>
+    </div>
+    <div class="header-right">
+      <a href="/profil">Profile</a>
+      <a href="/events">Events</a>
+      <a href="/tentang">About Us</a>
+    </div>
+  </header>
+
+  <main class="ticket-container">
+    <div class="ticket-details">
+      <div class="ticket-poster">
+        <% if (event.poster) { %>
+          <img src="<%= event.poster %>" alt="Poster" class="poster-image" />
+        <% } else { %>
+          <div class="no-poster">Image</div>
+        <% } %>
+      </div>
+      <div class="ticket-info">
+        <h2><%= event.name %></h2>
+        <p><%= event.description %></p>
+        <div class="ticket-location-date">
+          <p><strong>Location:</strong> <%= event.location %></p>
+          <p><strong>Date:</strong> <%= event.date %></p>
+        </div>
+        <form action="#" method="GET">
+          <button type="submit" class="buy-button">Daftar</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

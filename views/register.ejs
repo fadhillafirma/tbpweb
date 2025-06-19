@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pendaftaran Akun Organizer - Uvent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    /* Custom gradient for left panel */
+    .gradient-blue {
+      background: linear-gradient(135deg, #2c52ea, #2345ab);
+    }
+    /* Prevent horizontal overflow */
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Responsive Header -->
+  <header class="bg-white shadow sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+      <a href="#" class="flex items-center space-x-2">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/460f3103-d891-4828-a84f-181588032327.png" alt="Uvent logo in blue" class="w-8 h-8" />
+        <span class="sr-only">Uvent - Home</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm font-medium text-blue-900">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">Events</a>
+        <a href="#" class="hover:underline font-semibold">Users</a>
+        <a href="#" class="hover:underline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white flex flex-col md:flex-row max-w-5xl w-full rounded-2xl shadow-lg overflow-hidden">
+
+      <!-- Left Panel with Gradient Background -->
+      <section class="relative gradient-blue p-10 md:w-1/2 flex flex-col justify-center text-white space-y-8">
+        <h1 class="text-3xl lg:text-4xl font-extrabold tracking-wide">UVENT</h1>
+        <p class="text-sm lg:text-base leading-relaxed max-w-xs">
+          Buat, kelola, dan publikasikan event kampusmu hanya dalam beberapa langkah dengan Uvent!
+        </p>
+        <a href="/login" class="inline-block bg-white text-blue-900 font-semibold rounded px-5 py-3 text-sm max-w-max shadow hover:bg-gray-100 transition">
+          Have An Account
+        </a>
+      </section>
+
+      <!-- Right Panel with Registration Form -->
+      <section class="relative p-10 md:w-1/2 flex flex-col justify-center bg-gray-50">
+        <!-- Hiasan sudut kanan -->
+        <img src="images/hiasan.png" alt="hiasan" class="absolute top-0 right-0 w-20 md:w-35 lg:w-17 pointer-events-none select-none" />
+
+        <h2 class="text-2xl font-bold text-blue-900 mb-8">REGISTER</h2>
+
+        <!-- Form registrasi dengan action dan method POST -->
+        <form class="space-y-6" action="/register" method="POST" novalidate>
+          <div>
+            <label for="orgName" class="block text-sm font-medium text-gray-700">Nama Organisasi/Kepanitiaan</label>
+            <input
+              type="text"
+              name="orgName"
+              id="orgName"
+              required
+              placeholder="Masukkan nama organisasi atau kepanitiaan"
+              class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 placeholder-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder="email@example.com"
+              class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 placeholder-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+            />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Nomor HP</label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              required
+              placeholder="081234567890"
+              class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 placeholder-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+            />
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              placeholder="Masukkan password"
+              class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-900 placeholder-gray-400 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition"
+            />
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-blue-900 text-white font-semibold rounded-md py-3 hover:bg-blue-800 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >Register
+            </button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Responsive Footer -->
+  <footer class="bg-white border-t border-gray-200 text-gray-600 text-sm py-6 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>© 2024 Organizer Platform. All rights reserved.</p>
+      <nav class="flex space-x-4">
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Privacy Policy</a>
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Terms of Service</a>
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

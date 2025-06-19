@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organizer Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/stylesheets/login.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"  />
+  <style>
+    .focus-outline:focus {
+      outline: 2px solid #1434a4;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+      <a href="#" class="flex items-center space-x-2">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/460f3103-d891-4828-a84f-181588032327.png" alt="Uvent logo in blue" class="w-8 h-8" />
+        <span class="sr-only">Uvent - Home</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm font-medium text-blue-900">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">Events</a>
+        <a href="#" class="hover:underline font-semibold">Users</a>
+        <a href="#" class="hover:underline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 py-12 bg-gradient-to-b from-white to-blue-50">
+    <section class="relative max-w-lg w-full bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+      <!-- Hiasan sudut kanan -->
+      <img src="/images/hiasan.png" alt="hiasan" class="absolute top-0 right-0 w-20 md:w-35 lg:w-17 pointer-events-none select-none" />
+
+      <h1 class="text-center text-blue-900 font-extrabold text-3xl mb-8 select-none">LOG IN</h1>
+
+      <!-- Display Error Message -->
+        <% if (messages.error) { %>
+          <div class="text-red-600 bg-red-100 p-2 rounded-md mb-4">
+            <%= messages.error %>
+          </div>
+        <% } %>
+
+      <form action="/login" method="POST" class="space-y-6" aria-label="Form login akun organizer">
+        <div class="flex flex-col">
+          <label for="email" class="mb-2 font-semibold text-gray-800 select-none">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email"
+            class="border border-gray-300 rounded-md px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+        </div>
+
+        <div class="flex flex-col">
+          <label for="password" class="mb-2 font-semibold text-gray-800 select-none">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password"
+            class="border border-gray-300 rounded-md px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+        </div>
+
+        <button type="submit"
+          class="w-full py-3 mt-4 bg-blue-900 text-white font-semibold rounded-md hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-700 focus:ring-opacity-50 transition">
+          Log In
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 text-gray-600 text-sm py-6 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>© 2024 Organizer Platform. All rights reserved.</p>
+      <nav class="flex space-x-4">
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Privacy Policy</a>
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Terms of Service</a>
+        <a href="#" class="hover:text-blue-700 focus:outline-none focus:text-blue-700 focus:ring-1 focus:ring-blue-700 rounded">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
