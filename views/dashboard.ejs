@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Organizer</title>
+  <link rel="stylesheet" href="/stylesheets/dashboard.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <img src="images/logo.png" alt="Logo" class="logo" /> <!-- Logo di kiri -->
+      <h1>Dashboard Organizer</h1>
+    </div>
+    <div class="header-right">
+      <a href="/profil" class="profile-button" title="Profil">
+        <img src="<%= user.avatar || 'images/Userdefault.png' %>" alt="Profil" class="profile-img" /> <!-- Gambar profil -->
+      </a>
+      <a href="/events">Events</a>
+      <a href="/tentang">About Us</a>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    <% if (isEmpty) { %>
+      <div class="no-event">
+        <h2>No Events Created</h2>
+        <p>You have not created any events yet. Please create one.</p>
+        <form action="/events/create" method="POST">
+          <button type="submit" class="btn">Create New Event</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="event-list">
+        <h2>Your Events</h2>
+        <% events.forEach(event => { %>
+          <div class="event-item">
+            <img src="<%= event.image_url || 'images/default-event.jpg' %>" alt="<%= event.name %>" class="event-image" />
+            <h3><%= event.name %></h3>
+            <p><%= event.date %></p>
+            <a href="/dashboard/edit/<%= event.id %>" class="edit-btn">Edit</a>
+          </div>
+        <% }) %>
+      </div>
+      <form action="/events/create" method="POST">
+        <button type="submit" class="btn">Create New Event</button>
+      </form>
+    <% } %>
+  </main>
+</body>
+</html>
