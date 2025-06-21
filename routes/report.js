@@ -1,32 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const Report = require('../models/report');
+const db = require('../db'); // Koneksi ke database
 
 // Menampilkan halaman form laporan
-router.get('/report', (req, res) => {
+router.get('/', (req, res) => {  // Perhatikan rute ini adalah '/' bukan '/report'
     res.render('report');  // Render file report.ejs
 });
 
 // Menangani pengiriman laporan
-router.post('/report', async (req, res) => {
+router.post('/', (req, res) => {
     const { name, email, subject, message } = req.body;
 
-    try {
-        const newReport = new Report({
-            name,
-            email,
-            subject,
-            message
-        });
+    const query = 'INSERT INTO reports (name, email, subject, message) VALUES (?, ?, ?, ?)';
 
-        await newReport.save();  // Simpan laporan ke database
+    db.query(query, [name, email, subject, message], (err, result) => {
+        if (err) {
+            console.error('Error saving report:', err);
+            return res.status(500).send('Error saving report');
+        }
 
-        // Setelah laporan disimpan, redirect ke halaman dashboard admin
-        res.redirect('/admin/dashboard');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error saving report.');
-    }
+         // Setelah laporan disimpan, cek apakah user adalah organizer atau guest
+        if (req.session.userId) {
+            // Jika yang mengirim adalah organizer, redirect ke /dashboard
+            res.redirect('/dashboard');
+        } else {
+            // Jika yang mengirim adalah guest, redirect ke halaman event
+            res.redirect('/event');  // Bisa disesuaikan dengan halaman event yang sesuai
+        }
+    });
 });
 
 module.exports = router;
