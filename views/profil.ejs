@@ -23,9 +23,7 @@
     <aside class="sidebar">
       <ul>
         <li><strong><a href="/dashboard" style="color:white; text-decoration:none;">Dashboard</a></strong></li>
-        <li><strong>Order</strong></li>
         <li><strong><a href="/contact" style="color:white; text-decoration:none;">Report</a></strong></li>
-        <li><strong>Riders Management</strong></li>
         <li><strong><a href="/contact" style="color:white; text-decoration:none;">Contact</a></strong></li>
         <li><strong><a href="/tentang" style="color:white; text-decoration:none;">About</a></strong></li>
         <li><strong>Logout</strong></li>
@@ -41,36 +39,31 @@
       <% if (missingData) { %>
         <div class="alert alert-warning">
           <p>Beberapa data profil Anda belum lengkap. Silakan lengkapi informasi profil Anda.</p>
-        </div>
+            <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+          </div>
       <% } %>
 
       <div class="profile-header">
         <div class="avatar" id="avatar"style="background-image: url('<%= user && user.avatar_url ? user.avatar_url : '/images/Userdefault.png' %>')">
         </div>
-        <h3 id="display-name"><%= user.first_name %> <%= user.last_name %></h3>
-        <p id="display-role"><%= user.role %></p>
-        <p id="display-university">Universitas Andalas, Padang</p>
+       
+          <div class="profile-info">
+    <p id="display-org-name"><%= user.org_name %></p>  
+    <p id="display-university">Universitas Andalas, Padang</p>  
+    <p id="display-role"> Organizer</p>  
+        </div>
+
         <button onclick="openModal()" class="edit-avatar-btn">Edit Profile</button>
       </div>
 
       <div class="profile-section">
         <h4>Personal Information</h4>
         <div class="info-grid">
-          <p><strong>First Name</strong> <span id="first_name"><%= user.first_name %></span></p>
-          <p><strong>Last Name</strong> <span id="last_name"><%= user.last_name %></span></p>
-          <p><strong>Date of Birth</strong> <span id="dob"><%= user.dob %></span></p>
           <p><strong>Email Address</strong> <span id="email"><%= user.email %></span></p>
           <p><strong>Phone Number</strong> <span id="phone"><%= user.phone %></span></p>
-          <p><strong>User Role</strong> <span id="role"><%= user.role %></span></p>
+          <p><strong>User Role</strong> <span id="role"> Organizer</span></p>
         </div>
       </div>
-
-      <div class="profile-section">
-        <h4>Address</h4>
-        <div class="info-grid">
-          <p><strong>Country</strong> <span id="country"><%= user.country %></span></p>
-          <p><strong>City</strong> <span id="city"><%= user.city %></span></p>
-        </div>
       </div>
     </main>
   </div>
@@ -79,19 +72,16 @@
   <div class="modal" id="modal">
     <div class="modal-content">
       <h3>Edit Profile</h3>
+      <br>
 
-      <form action="/profil/edit" method="POST" enctype="multipart/form-data">
-        <label>Upload Photo:</label>
-        <input type="file" name="avatar" accept="image/*" id="avatar-upload">
+      <form action="/profil/edit" method="POST" enctype="multipart/form-data">        
         
-        <input type="text" name="firstName" value="<%= user.first_name %>" placeholder="First Name">
-        <input type="text" name="lastName" value="<%= user.last_name %>" placeholder="Last Name">
-        <input type="text" name="email" value="<%= user.email %>" placeholder="Email Address">
+        <input type="text" name="email" value="<%= user.email %>" disabled placeholder="Email Address">
         <input type="text" name="phone" value="<%= user.phone %>" placeholder="Phone Number">
         <input type="text" name="dob" value="<%= user.dob %>" placeholder="Date of Birth">
         <input type="text" name="role" value="organizer" disabled placeholder="User Role"> <!-- Disable role input -->
-        <input type="text" name="country" value="<%= user.country %>" placeholder="Country">
-        <input type="text" name="city" value="<%= user.city %>" placeholder="City">
+        
+
         <button type="submit">Save</button>
       </form>
     </div>

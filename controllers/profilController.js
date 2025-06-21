@@ -73,11 +73,11 @@ exports.saveProfile = (req, res) => {
       firstName, lastName, email, phone, dob, role, country, city, avatarPath, userId
     });
 
-    const query = `UPDATE profiles 
-                   SET first_name = ?, last_name = ?, email = ?, phone = ?, dob = ?, role = ?, country = ?, city = ?, avatar_url = ?, updated_at = NOW()
-                   WHERE id = ?`;
+    const query = `UPDATE users
+                  SET phone = ?, dob = ?, role = ?, country = ?, city = ?, avatar_url = ?, updated_at = NOW()
+                  WHERE id = ?`;
 
-    db.query(query, [firstName, lastName, email, phone, dob, role, country, city, avatarPath, userId], (err, results) => {
+    db.query(query, [email, phone, dob, role, country, city, avatarPath, userId], (err, results) => {
       if (err) {
         console.error('Error updating profile:', err);
         return res.status(500).json({ success: false, message: 'Failed to update profile' });
@@ -86,7 +86,7 @@ exports.saveProfile = (req, res) => {
       console.log('Query berhasil dijalankan, hasil:', results);
 
       // Setelah data diperbarui, ambil data terbaru dari database untuk dikirim kembali ke tampilan profil
-      const queryGetProfile = 'SELECT * FROM profiles WHERE id = ?';
+      const queryGetProfile = 'SELECT * FROM users WHERE id = ?';
       db.query(queryGetProfile, [userId], (err, results) => {
         if (err) {
           console.error('Error retrieving updated profile:', err);
