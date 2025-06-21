@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail User</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+  <header class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto flex justify-between items-center py-4 px-6">
+      <div class="flex items-center space-x-2">
+        <img src="/public/images/Logo.png" alt="Logo" class="w-10 h-10" />
+      </div>
+
+      <nav class="flex space-x-6 text-blue-800 font-medium ml-auto">
+        <a href="/admin/home" class="hover:underline">Home</a>
+        <a href="/admin/events" class="hover:underline">Events</a>
+        <a href="/admin/users" class="active underline font-bold">Users</a>
+        <a href="/logout" class="hover:underline">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto mt-10 px-6">
+    <h2 class="text-4xl font-bold text-blue-800 mb-8">Detail User</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="flex flex-col items-center justify-center bg-white p-8 rounded-xl shadow">
+        <img src="<%= user.foto_profil || '/images/default-profile.png' %>" alt="Foto Profil" class="w-80 h-80 object-cover mb-6">
+        <a href="/admin/users" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-medium">Kembali</a>
+      </div>
+
+      <div class="bg-white p-8 rounded-xl shadow text-sm md:text-base">
+        <div class="mb-4">
+          <p class="text-gray-500">ID User</p>
+          <p class="font-bold text-lg border-b pb-1">USR-<%= user.id.toString().padStart(3, '0') %></p>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-gray-500">Nama Organisasi/Kepanitiaan</p>
+          <p class="font-bold text-lg border-b pb-1"><%= user.nama_organisasi|| '-' %></p>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-gray-500">Fakultas</p>
+          <p class="font-bold text-lg border-b pb-1"><%= user.fakultas || '-' %></p>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-gray-500">Email</p>
+          <p class="font-bold text-lg border-b pb-1"><%= user.email || '-' %></p>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-gray-500">Password</p>
+          <p class="font-bold text-lg border-b pb-1"><%= user.password || '-' %></p>
+        </div>
+
+        <div class="mb-4">
+          <p class="text-gray-500">Total Event yang Dimiliki</p>
+          <p class="font-bold text-lg border-b pb-1"><%= user.total_event || 0 %> event</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
