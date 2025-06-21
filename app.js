@@ -10,6 +10,9 @@ const db = require('./db'); // Menggunakan koneksi database tunggal
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var profilRoutes = require('./routes/profilRoutes'); // Rute untuk profil
+const participantRoutes = require('./routes/pendaftaran'); // *Import participantRoutes dulu*
+const reportRoutes = require('./routes/report'); // Import report routes
+console.log('Report routes loaded'); // Tambahkan log untuk memverifikasi bahwa rute sudah dimuat
 
 var app = express();
 
@@ -45,7 +48,7 @@ app.use((req, res, next) => {
 
       // Mengecek apakah ada data yang belum lengkap (missingData)
       const missingData = !user.first_name || !user.last_name || !user.email || !user.phone || !user.country || !user.city;
-
+      
       // Menambahkan missingData ke res.locals
       res.locals.missingData = missingData;  // Menambahkan missingData ke res.locals
       res.locals.user = user;  // Menambahkan user ke res.locals
@@ -57,19 +60,20 @@ app.use((req, res, next) => {
 });
 
 // Middleware setup
-app.use(logger('dev'));
+app.use(logger('dev'));  // Log setiap request ke server
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Set folder untuk file statis seperti gambar, CSS, dll.
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routing untuk halaman utama dan users
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/profil', profilRoutes);
+
+// Pindahkan participantRoutes ke sini agar bisa digunakan
+app.use('/', participantRoutes);  // Menggunakan prefix '/'
 
 // Routing untuk halaman homepage
 app.get('/', (req, res) => {
@@ -81,47 +85,25 @@ app.get('/events', function(req, res, next) {
   res.render('event');
 });
 
-// Routing untuk halaman komentar
-app.get('/comments', (req, res) => {
-  db.query('SELECT * FROM comments ORDER BY comment_datetime DESC', (err, results) => {
-    if (err) {
-      console.error('Error fetching comments: ', err);
-      return res.status(500).send('Error fetching comments');
-    }
-    res.render('index', { comments: results });
+// Menangani rute buktipendaftar
+app.get('/buktipendaftar', (req, res) => {
+  const { nama, email, whatsapp, event } = req.query;
+
+  // Pastikan Anda merender buktipendaftar.ejs dengan data yang diperlukan
+  res.render('buktipendaftar', {
+    nama: nama,
+    email: email,
+    whatsapp: whatsapp,
+    event: event
   });
 });
 
-// Routing untuk menyimpan komentar ke database
-app.post('/submit-comment', (req, res) => {
-  const { comment_text, user_id } = req.body;
-
-  if (comment_text && comment_text.trim() !== "") {
-    const query = 'INSERT INTO comments (user_id, comment_text) VALUES (?, ?)';
-    db.query(query, [user_id, comment_text], (err, result) => {
-      if (err) {
-        console.error('Error inserting comment: ', err);
-        return res.status(500).send('Error saving comment');
-      }
-      res.status(200).json({ message: 'Comment saved successfully' });
-    });
-  } else {
-    res.status(400).json({ message: 'Comment cannot be empty' });
-  }
-});
-
-// Dashboard Route (Setelah login berhasil)
-app.get('/dashboard', (req, res) => {
-  if (!req.session.userId) {
-    return res.redirect('/login');  // Jika tidak ada sesi, arahkan kembali ke login
-  }
-
-  res.render('dashboard');  // Gantilah dengan tampilan dashboard yang sesuai
-});
+// Menambahkan rute untuk laporan
+app.use('/report', reportRoutes); // Menambahkan rute laporan
 
 // Handle 404 errors
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(createError(404));  // Jika rute tidak ditemukan
 });
 
 // Error handler
@@ -133,10 +115,28 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Menentukan port
-var PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(Server is running on port ${PORT});
+// Dashboard Route (Setelah login berhasil)
+app.get('/dashboard', (req, res) => {
+  if (!req.session.userId) {
+    return res.redirect('/login');  // Jika tidak ada sesi, arahkan kembali ke login
+  }
+
+  res.render('dashboard');  // Gantilah dengan tampilan dashboard yang sesuai
 });
 
-module.exports = app;
+// Menangani port yang sudah digunakan dan error handling untuk EADDRINUSE
+const port = process.env.PORT || 3003; // Ganti 3001 menjadi 3003
+
+app.listen(port, (err) => {
+  if (err) {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${port} sudah digunakan. Silakan gunakan port yang berbeda.`);
+    } else {
+      console.error('Terjadi error yang tidak terduga:', err);
+    }
+  } else {
+    console.log(`Server berjalan di http://localhost:${port}`);
+  }
+});
+
+module.exports = app;
